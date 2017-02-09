@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>loader</title>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        
+             .loader {
+            background-color: greenyellow;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .loader .ball {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+        
+        svg {
+            width: 100%;
+            /*            border:1px green solid;*/
+        }
+        
+        svg .anim-svg {
+            box-shadow: 2px 2px 2px black
+        }
+        
+        body {
+            background-color: crimson;
+        }
+
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="js/TimelineMax.min.js"></script>
+
+
+
+    <script>
+    
+var t1;
+        $(onLoaded)
+
+        function onLoaded(e) {
+            $('body').on('click', function() {
+               // t2.pause()
+                TweenMax.killTweensOf($('circle'));
+                t1.reverse();
+            });
+
+            t1 = new TimelineMax({
+                repeat: 0,
+                paused: false
+            });
+
+            t1.to('.ball', 2, {
+                left: "50%",
+                top: "50%",
+                yPercent: '-50',
+                onComplete: function() {
+                    t2.play();
+                }
+
+            });
+
+            var t2 = new TimelineMax({
+                paused: true,
+                repeat: -1,
+                repeatDelay: 0,
+                yoyo: true
+            })
+
+            t2.staggerFromTo($('circle'), 1, {
+                transformOrigin: "50% 50%",
+                rotation: 0,
+                ease: Power2.easeIn
+            }, {
+                transformOrigin: "50% 50%",
+                rotation: getRandomArbitrary(0, 360),
+                ease: Power2.easeOut
+            }, 0.1);
+            //directionalRotation:"270_ccw"
+
+            function getRandomArbitrary(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+
+
+
+        }
+
+    </script>
+
+
+
+
+</head>
+
+<body>
+
+    <div class="loader">
+        <div class="ball">
+            <svg class="anim-svg" width="400" height="400">
+
+                <circle class="n-5" fill='transparent' stroke='crimson' stroke-width='9px' class="outer" cx="50%" cy="50%" r="85" stroke-dasharray="4" />
+                <circle class="n-5" fill='transparent' stroke='crimson' stroke-width='4px' class="outer" cx="50%" cy="50%" r="65" />
+                <circle class="n-5" fill='transparent' stroke='darkred' stroke-width='4px' class="outer" cx="50%" cy="50%" r="45" stroke-dasharray="5" />
+                <circle class="n-5" fill='transparent' stroke='crimson' stroke-width='4px' class="outer" cx="50%" cy="50%" r="25" />
+                <circle class="n-5" fill='transparent' stroke='darkred' stroke-width='4px' class="outer" cx="50%" cy="50%" r="5" stroke-dasharray="2" />
+            </svg>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
